@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파이썬 하드웨어 콘솔 대시보드 — 중학생 눈높이 설명서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 30, 49, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --secondary: #818cf8;
+      --accent: #a855f7;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.12) 0%, transparent 40%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    h2 {
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .sub-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .sub-card h3 { font-size: 1.15rem; margin-bottom: 8px; color: #e2e8f0; }
+    .highlight-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    pre {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 18px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #38bdf8;
+      line-height: 1.5;
+      margin: 15px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+    }
+    th { color: var(--primary); background: rgba(56, 189, 248, 0.05); }
+    .tag-healthy {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .tag-nvme {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .step-box {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #0b0f19;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content h4 { color: #f8fafc; margin-bottom: 4px; }
+    .step-content p { color: var(--text-muted); font-size: 0.95rem; }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">프로젝트 1 • 중학생 눈높이 가이드</span>
+      <h1>파이썬 하드웨어 콘솔 대시보드</h1>
+      <p class="subtitle">내 컴퓨터의 SSD, HDD, RAM(메모리) 상태를 터미널에서 실시간으로 분석하기</p>
+    </header>
+
+    <!-- 1. 원리 -->
+    <div class="card">
+      <h2>💡 1. 원리 — 방과 가구에 빗대어 보는 컴퓨터 부품</h2>
+      <p>컴퓨터를 우리들의 <strong>공부방</strong>이라고 생각하면 정말 쉽게 이해할 수 있습니다!</p>
+      
+      <div class="grid-3">
+        <div class="sub-card">
+          <span class="highlight-icon">📖</span>
+          <h3>RAM (메모리) = 공부 책상</h3>
+          <p>공부할 때 책과 노트를 펼쳐놓는 공간입니다. <strong>책상이 넓을수록(내 PC: 28GB)</strong> 한 번에 여러 개의 게임과 인터넷 창을 띄워도 버벅거리지 않습니다.</p>
+        </div>
+        <div class="sub-card">
+          <span class="highlight-icon">⚡</span>
+          <h3>SSD = 초고속 전자 책꽂이</h3>
+          <p>움직이는 모터 부품 없이 <strong>순수 반도체 칩</strong>에 전자로 기록합니다. 손만 뻗으면 빛의 속도로 게임 데이터를 바로 꺼내옵니다.</p>
+        </div>
+        <div class="sub-card">
+          <span class="highlight-icon">💾</span>
+          <h3>HDD = 거대한 자석 창고</h3>
+          <p>동그란 LP판 같은 자석 디스크가 윙~ 돌면서 바늘로 읽습니다. 용량에 비해 값이 싸지만 물리적으로 돌기 때문에 SSD보다 속도가 느립니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 작동 원리 -->
+    <div class="card">
+      <h2>⚙️ 2. 작동 원리 — 파이썬은 어떻게 부품 정보를 알아낼까?</h2>
+      <p>
+        파이썬 프로그램이 직접 컴퓨터 본체를 열고 돋보기로 부품을 들여다보는 게 아닙니다.  
+        윈도우(Windows 11) 안에는 부품들의 상태를 24시간 꼼꼼히 적어두는 <strong>시스템 비서(WMI/CIM)</strong>가 살고 있습니다.
+      </p>
+      <pre>
+[파이썬 프로그램] ──▶ "비서님! 지금 디스크랑 메모리 건강 상태 좀 알려주세요!"
+       │
+[윈도우 비서 (WMI/CIM)] ──▶ 하드웨어 칩셋 센서 확인
+       │
+[결과 데이터 (JSON)] ──▶ 바이트를 GB로 계산 후 컬러 그래프로 터미널에 출력!</pre>
+    </div>
+
+    <!-- 3. 구성 -->
+    <div class="card">
+      <h2>📁 3. 구성 — 어떤 파일들로 이루어져 있나요?</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>파일명</th>
+            <th>역할</th>
+            <th>설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>run.bat</strong></td>
+            <td>원클릭 실행기</td>
+            <td>더블 클릭만 하면 검은색 터미널 창을 띄우고 바로 분석을 시작합니다.</td>
+          </tr>
+          <tr>
+            <td><strong>src/analyzer.py</strong></td>
+            <td>파이썬 메인 두뇌</td>
+            <td>윈도우 시스템에 질문을 던져 SSD/HDD/RAM 수치를 가져와 그래프를 그립니다.</td>
+          </tr>
+          <tr>
+            <td><strong>docs/README.md</strong></td>
+            <td>텍스트 설명서</td>
+            <td>깃허브나 코드 에디터에서 바로 읽을 수 있는 마크다운 안내서입니다.</td>
+          </tr>
+          <tr>
+            <td><strong>docs/설명서.html</strong></td>
+            <td>웹 설명서</td>
+            <td>지금 보고 있는 바로 이 아름다운 브라우저용 안내서입니다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. 프로세스 -->
+    <div class="card">
+      <h2>🔄 4. 프로세스 — 프로그램이 실행되는 4단계 과정</h2>
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>하드웨어 감지 (Hardware Detection)</h4>
+          <p>내 PC에 꽂힌 물리 디스크(NVMe SSD)들과 램 슬롯에 몇 장의 메모리가 꽂혀 있는지 조회합니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>데이터 가공 및 단위 변환 (Data Processing)</h4>
+          <p>컴퓨터가 좋아하는 거대한 바이트(Bytes) 숫자를 사람이 읽기 쉬운 기가바이트(GB)와 퍼센트(%)로 변환합니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>건강 상태 및 수명 점검 (Health Diagnostic)</h4>
+          <p>디스크 건강 상태(HealthStatus)가 Healthy(정상)인지, 여유 공간이 부족한지 분석합니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>실시간 컬러 화면 출력 (Real-time Rendering)</h4>
+          <p>3초마다 화면을 깨끗이 지우고 최신 디스크 읽기/쓰기 속도와 램 사용량을 막대그래프로 보여줍니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 실제 예시 -->
+    <div class="card">
+      <h2>🔬 5. 실제 내 PC 분석 예시 (실측 데이터)</h2>
+      <p>내 컴퓨터에서 실제로 프로그램을 실행했을 때 확인된 진짜 하드웨어 스펙입니다:</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>부품</th>
+            <th>모델명 / 사양</th>
+            <th>종류 / 연결</th>
+            <th>건강 상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>디스크 #1</strong></td>
+            <td>WDC PC SN530 256GB</td>
+            <td><span class="tag-nvme">SSD (NVMe)</span></td>
+            <td><span class="tag-healthy">Healthy (정상)</span></td>
+          </tr>
+          <tr>
+            <td><strong>디스크 #0</strong></td>
+            <td>Samsung SSD 970 EVO Plus 500GB</td>
+            <td><span class="tag-nvme">SSD (NVMe)</span></td>
+            <td><span class="tag-healthy">Healthy (정상)</span></td>
+          </tr>
+          <tr>
+            <td><strong>메모리 1번</strong></td>
+            <td>Samsung 16GB (2667 MHz)</td>
+            <td>DDR4 모듈</td>
+            <td><span class="tag-healthy">정상 동작</span></td>
+          </tr>
+          <tr>
+            <td><strong>메모리 2번</strong></td>
+            <td>호환 메모리 16GB (3200 MHz)</td>
+            <td>DDR4 모듈</td>
+            <td><span class="tag-healthy">정상 동작</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 15px;">
+        💡 <strong>총평:</strong> 구형 저속 HDD가 전혀 없고, 두 드라이브 모두 최신 고속 <strong>NVMe M.2 SSD</strong>이며, 
+        램도 <strong>16GB 2장(총 32GB, 시스템 가용 28GB)</strong>으로 넉넉하게 세팅된 아주 훌륭한 고성능 PC입니다!
+      </p>
+    </div>
+
+    <footer>
+      <p>© 2026 PC 하드웨어 분석기 프로젝트 • 교육용 실습 자료</p>
+    </footer>
+  </div>
+</body>
+</html>

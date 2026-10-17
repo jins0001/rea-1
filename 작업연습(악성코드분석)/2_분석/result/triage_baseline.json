@@ -1,0 +1,208 @@
+{
+  "file": {
+    "path": "D:\\Tools\\Git\\usr\\bin\\true.exe",
+    "name": "true.exe",
+    "size": 33123,
+    "md5": "d945f3b22db52d1b4678e436efa6c900",
+    "sha1": "ce94ebf7af28df9ea4b821fd198c23a83278427f",
+    "sha256": "e3ce235425032cc3e1262f46b414b1b88f971724104916690f24e25c4663d474",
+    "entropy": 5.55
+  },
+  "pe": {
+    "is_pe": true,
+    "machine": "x64 (64비트)",
+    "compile_time_utc": "2022-11-15T17:19:05+00:00",
+    "is_dll": false,
+    "subsystem": "콘솔(명령창 프로그램)",
+    "is_dotnet": false,
+    "sections": [
+      {
+        "name": ".text",
+        "virtual_address": 4096,
+        "virtual_size": 15912,
+        "raw_size": 16384,
+        "raw_pointer": 1024,
+        "entropy": 5.97,
+        "executable": true,
+        "writable": false
+      },
+      {
+        "name": ".data",
+        "virtual_address": 20480,
+        "virtual_size": 256,
+        "raw_size": 512,
+        "raw_pointer": 17408,
+        "entropy": 0.35,
+        "executable": false,
+        "writable": true
+      },
+      {
+        "name": ".rdata",
+        "virtual_address": 24576,
+        "virtual_size": 4864,
+        "raw_size": 5120,
+        "raw_pointer": 17920,
+        "entropy": 4.93,
+        "executable": false,
+        "writable": false
+      },
+      {
+        "name": ".buildid",
+        "virtual_address": 32768,
+        "virtual_size": 53,
+        "raw_size": 512,
+        "raw_pointer": 23040,
+        "entropy": 0.53,
+        "executable": false,
+        "writable": false
+      },
+      {
+        "name": ".pdata",
+        "virtual_address": 36864,
+        "virtual_size": 1164,
+        "raw_size": 1536,
+        "raw_pointer": 23552,
+        "entropy": 3.32,
+        "executable": false,
+        "writable": false
+      },
+      {
+        "name": ".xdata",
+        "virtual_address": 40960,
+        "virtual_size": 920,
+        "raw_size": 1024,
+        "raw_pointer": 25088,
+        "entropy": 3.52,
+        "executable": false,
+        "writable": false
+      },
+      {
+        "name": ".bss",
+        "virtual_address": 45056,
+        "virtual_size": 5632,
+        "raw_size": 0,
+        "raw_pointer": 0,
+        "entropy": 0.0,
+        "executable": false,
+        "writable": true
+      },
+      {
+        "name": ".idata",
+        "virtual_address": 53248,
+        "virtual_size": 2132,
+        "raw_size": 2560,
+        "raw_pointer": 26112,
+        "entropy": 3.34,
+        "executable": false,
+        "writable": true
+      },
+      {
+        "name": ".rsrc",
+        "virtual_address": 57344,
+        "virtual_size": 1256,
+        "raw_size": 1536,
+        "raw_pointer": 28672,
+        "entropy": 4.78,
+        "executable": false,
+        "writable": true
+      },
+      {
+        "name": ".reloc",
+        "virtual_address": 61440,
+        "virtual_size": 68,
+        "raw_size": 512,
+        "raw_pointer": 30208,
+        "entropy": 0.78,
+        "executable": false,
+        "writable": false
+      }
+    ],
+    "imports": {
+      "msys-intl-8.dll": [
+        "libintl_bindtextdomain",
+        "libintl_gettext",
+        "libintl_setlocale",
+        "libintl_textdomain"
+      ],
+      "msys-2.0.dll": [
+        "__cxa_atexit",
+        "__errno",
+        "__getreent",
+        "__locale_ctype_ptr",
+        "__locale_mb_cur_max",
+        "__main",
+        "__memcpy_chk",
+        "__sprintf_chk",
+        "__strcpy_chk",
+        "_dll_crt0",
+        "_exit",
+        "_impure_ptr",
+        "abort",
+        "calloc",
+        "cygwin_internal",
+        "dll_dllcrt0",
+        "error",
+        "exit",
+        "fclose",
+        "fprintf",
+        "fputc_unlocked",
+        "fputs_unlocked",
+        "free",
+        "fwrite",
+        "getenv",
+        "iswprint",
+        "malloc",
+        "mbrtowc",
+        "mbsinit",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "msys_detach_dll",
+        "nl_langinfo",
+        "posix_memalign",
+        "printf",
+        "program_invocation_name",
+        "program_invocation_short_name",
+        "pthread_mutex_lock",
+        "pthread_mutex_unlock",
+        "realloc",
+        "setlocale",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr"
+      ],
+      "KERNEL32.dll": [
+        "GetACP",
+        "GetModuleHandleA",
+        "GetModuleHandleW"
+      ]
+    }
+  },
+  "suspicious_apis": [],
+  "iocs": {
+    "url": [
+      {
+        "value": "https://www.gnu.org/software/coreutils/"
+      },
+      {
+        "value": "https://translationproject.org/team/"
+      },
+      {
+        "value": "https://gnu.org/licenses/gpl.html"
+      },
+      {
+        "value": "https://www.gnu.org/gethelp/"
+      }
+    ],
+    "ipv4": [],
+    "registry": [],
+    "file_path": [],
+    "mutex": [],
+    "user_agent": [],
+    "base64": []
+  },
+  "string_count": 305
+}

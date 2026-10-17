@@ -1,0 +1,121 @@
+{
+  "file": {
+    "path": "../1_훈련용샘플/bin/TrainingSample.exe",
+    "name": "TrainingSample.exe",
+    "size": 5120,
+    "md5": "0768b003e7b027135d49507f225f6390",
+    "sha1": "23b5fe97e9711ebab4f4181b3ad92ed6b9b690cf",
+    "sha256": "0d2e4528b1b151bc45b8fa6e2b35ddc09f3a46d8dbcd47dcb189502025802601",
+    "entropy": 3.83,
+    "partial_read": false
+  },
+  "pe": {
+    "is_pe": true,
+    "machine": "x86 (32비트)",
+    "compile_time_utc": "2026-10-17T15:03:15+00:00",
+    "is_dll": false,
+    "subsystem": "콘솔(명령창 프로그램)",
+    "is_dotnet": true,
+    "sections": [
+      {
+        "name": ".text",
+        "virtual_address": 8192,
+        "virtual_size": 2420,
+        "raw_size": 2560,
+        "raw_pointer": 512,
+        "entropy": 4.43,
+        "executable": true,
+        "writable": false
+      },
+      {
+        "name": ".rsrc",
+        "virtual_address": 16384,
+        "virtual_size": 1272,
+        "raw_size": 1536,
+        "raw_pointer": 3072,
+        "entropy": 3.75,
+        "executable": false,
+        "writable": false
+      },
+      {
+        "name": ".reloc",
+        "virtual_address": 24576,
+        "virtual_size": 12,
+        "raw_size": 512,
+        "raw_pointer": 4608,
+        "entropy": 0.08,
+        "executable": false,
+        "writable": false
+      }
+    ],
+    "imports": {
+      "mscoree.dll": [
+        "_CorExeMain"
+      ]
+    }
+  },
+  "suspicious_apis": [
+    {
+      "api": "IsDebuggerPresent",
+      "meaning": "디버거(분석 도구) 감지",
+      "attack": "T1622 Debugger Evasion"
+    },
+    {
+      "api": "VirtualAlloc",
+      "meaning": "실행 가능한 메모리 확보 가능",
+      "attack": "T1055 Process Injection (준비 단계)"
+    },
+    {
+      "api": "InternetOpenUrlA",
+      "meaning": "인터넷 주소 접속",
+      "attack": "T1071.001 Web Protocols"
+    },
+    {
+      "api": "RegSetValueExA",
+      "meaning": "레지스트리 값 쓰기",
+      "attack": "T1112 Modify Registry"
+    }
+  ],
+  "iocs": {
+    "url": [
+      {
+        "value": "http://update-check.training.invalid/beacon.php"
+      }
+    ],
+    "ipv4": [
+      {
+        "value": "203.0.113.45"
+      },
+      {
+        "value": "198.51.100.7:8443"
+      }
+    ],
+    "registry": [
+      {
+        "value": "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+      }
+    ],
+    "file_path": [
+      {
+        "value": "%APPDATA%\\SysUpdate\\svchost_update.exe"
+      }
+    ],
+    "mutex": [
+      {
+        "value": "Global\\TRAINING_SAMPLE_MUTEX_7F3A"
+      }
+    ],
+    "user_agent": [
+      {
+        "value": "Mozilla/5.0 (TrainingBot/1.0)"
+      }
+    ],
+    "base64": [
+      {
+        "value": "VFJBSU5JTkcgU0FNUExFIC0gTk9UIE1BTFdBUkU=",
+        "decoded": "TRAINING SAMPLE - NOT MALWARE"
+      }
+    ]
+  },
+  "string_count": 81
+}

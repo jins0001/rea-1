@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 PC 하드웨어 실시간 분석 웹 대시보드</title>
+  <meta name="description" content="내 컴퓨터의 SSD, HDD, RAM(메모리) 상태 및 실시간 속도를 모니터링하는 프리미엄 웹 대시보드">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-bg top-left"></div>
+  <div class="glow-bg bottom-right"></div>
+
+  <div class="app-container">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-box">
+          <span class="logo-icon">⚡</span>
+        </div>
+        <div>
+          <h1 id="app-title">PC 하드웨어 실시간 분석 센터</h1>
+          <p class="header-subtitle" id="system-os-text">Windows 11 하드웨어 인텔리전스 시스템</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="live-indicator">
+          <span class="pulse-dot"></span>
+          <span>LIVE 진단 중</span>
+        </div>
+        <div class="last-sync" id="last-update-time">데이터 수집 대기...</div>
+      </div>
+    </header>
+
+    <!-- 상단 주요 요약 카드 3개 -->
+    <section class="summary-grid">
+      <!-- 1. 메모리(RAM) 게이지 카드 -->
+      <div class="glass-card stat-card" id="card-ram-summary">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon ram-icon">🧠</span>
+            <div>
+              <h3>시스템 메모리 (RAM)</h3>
+              <p class="card-desc">작업 공간 점유율</p>
+            </div>
+          </div>
+          <span class="badge badge-accent" id="ram-badge">정상 가동</span>
+        </div>
+        <div class="gauge-container">
+          <div class="circular-progress" id="ram-circle">
+            <svg viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="42"></circle>
+              <circle class="circle-fill" id="ram-circle-fill" cx="50" cy="50" r="42"></circle>
+            </svg>
+            <div class="circle-text">
+              <span class="circle-value" id="ram-usage-pct">0%</span>
+              <span class="circle-label">사용 중</span>
+            </div>
+          </div>
+          <div class="gauge-details">
+            <div class="detail-row">
+              <span class="detail-label">총 물리 메모리</span>
+              <span class="detail-val" id="ram-total-val">-- GB</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">사용 중인 메모리</span>
+              <span class="detail-val text-warning" id="ram-used-val">-- GB</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">사용 가능한 여유</span>
+              <span class="detail-val text-success" id="ram-free-val">-- GB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 물리 디스크 개요 카드 -->
+      <div class="glass-card stat-card" id="card-disk-summary">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon disk-icon">⚡</span>
+            <div>
+              <h3>물리 저장장치 (SSD / HDD)</h3>
+              <p class="card-desc">장착된 드라이브 상태</p>
+            </div>
+          </div>
+          <span class="badge badge-success" id="disk-health-summary-badge">Healthy (정상)</span>
+        </div>
+        <div class="disk-summary-content">
+          <div class="stat-big-number" id="disk-count-text">2개 장착됨</div>
+          <p class="disk-meta-text" id="disk-types-text">NVMe 고속 SSD 전용 구성</p>
+          <div class="disk-quick-list" id="physical-disk-quick-list">
+            <!-- JS 동적 생성 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 실시간 디스크 I/O 속도 카드 -->
+      <div class="glass-card stat-card" id="card-io-summary">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon io-icon">📊</span>
+            <div>
+              <h3>디스크 실시간 I/O</h3>
+              <p class="card-desc">초당 읽기 및 쓰기 활동</p>
+            </div>
+          </div>
+          <span class="badge badge-primary">실시간 측정</span>
+        </div>
+        <div class="io-metrics-container" id="io-metrics-list">
+          <!-- JS 동적 생성 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 중단: 볼륨 및 드라이브 사용 현황 -->
+    <section class="section-container">
+      <div class="section-header">
+        <h2>📁 드라이브 파티션 및 여유 공간</h2>
+        <span class="section-tag">드라이브별 잔여 용량 분석</span>
+      </div>
+      <div class="volumes-grid" id="volumes-container">
+        <!-- JS 동적 생성 -->
+      </div>
+    </section>
+
+    <!-- 하단: 물리 하드웨어 상세 스펙 (RAM 슬롯 & 물리 디스크 상세) -->
+    <section class="section-container">
+      <div class="section-header">
+        <h2>⚙️ 하드웨어 세부 제원 (RAM 슬롯 & 물리 드라이브)</h2>
+        <span class="section-tag">메인보드 장착 상세</span>
+      </div>
+      <div class="details-two-columns">
+        <!-- RAM 슬롯 목록 -->
+        <div class="glass-card inner-card">
+          <h3 class="inner-title">
+            <span>🧩 메모리(RAM) 슬롯 구성</span>
+            <span class="badge badge-sm" id="ram-slots-count">2개 슬롯</span>
+          </h3>
+          <div class="slot-list" id="ram-slots-container">
+            <!-- JS 동적 생성 -->
+          </div>
+        </div>
+
+        <!-- 물리 디스크 상세 -->
+        <div class="glass-card inner-card">
+          <h3 class="inner-title">
+            <span>💾 물리 저장장치 제원 및 S.M.A.R.T.</span>
+            <span class="badge badge-sm" id="disks-total-capacity">-- GB</span>
+          </h3>
+          <div class="physical-disks-container" id="physical-disks-container">
+            <!-- JS 동적 생성 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="app-footer">
+      <p>💡 내 PC 하드웨어 분석 센터 • 2초마다 윈도우 WMI/CIM 엔진으로부터 자동 갱신됩니다.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

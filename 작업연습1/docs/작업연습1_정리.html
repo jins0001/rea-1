@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>작업연습1 정리</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --surface: #ffffff; --text: #1f1d1a; --muted: #6b665e;
+    --line: #e4e0d8; --accent: #2f6fdb; --accent-soft: #e8f0fd;
+    --good: #1f8a4c; --good-soft: #e6f4ec; --bad: #c2412d; --bad-soft: #fbeae6;
+    --code-bg: #f0ede6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161513; --surface: #201f1c; --text: #ece9e3; --muted: #a29d93;
+      --line: #35332e; --accent: #7aa7f5; --accent-soft: #1f2a3d;
+      --good: #5cc28a; --good-soft: #17291f; --bad: #f08a76; --bad-soft: #33201b;
+      --code-bg: #2a2925;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161513; --surface: #201f1c; --text: #ece9e3; --muted: #a29d93;
+    --line: #35332e; --accent: #7aa7f5; --accent-soft: #1f2a3d;
+    --good: #5cc28a; --good-soft: #17291f; --bad: #f08a76; --bad-soft: #33201b;
+    --code-bg: #2a2925;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    line-height: 1.7; font-size: 16px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 32px 16px 80px; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 20px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  nav a { font-size: 0.88rem; text-decoration: none; color: var(--accent); border: 1px solid var(--line);
+    background: var(--surface); padding: 4px 10px; border-radius: 999px; }
+  section { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin: 18px 0; }
+  h2 { font-size: 1.3rem; margin: 0 0 12px; }
+  h3 { font-size: 1.05rem; margin: 20px 0 8px; }
+  .table-wrap { overflow-x: auto; margin: 10px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.88em; font-family: Consolas, "D2Coding", monospace; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; }
+  .tip { background: var(--code-bg); border-radius: 8px; padding: 10px 14px; margin: 12px 0; font-size: 0.95rem; }
+  .tip b { color: var(--accent); }
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0; }
+  .step { background: var(--accent-soft); border-radius: 10px; padding: 10px; text-align: center; }
+  .step .n { font-weight: 700; color: var(--accent); font-size: 1.1rem; }
+  .step .t { font-weight: 600; }
+  .step .d { color: var(--muted); font-size: 0.8rem; }
+  @media (max-width: 640px) { .steps { grid-template-columns: 1fr 1fr; } h1 { font-size: 1.5rem; } }
+  .score { display: flex; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
+  .score .box { flex: 1; min-width: 200px; border-radius: 10px; padding: 12px 14px; }
+  .box.bad { background: var(--bad-soft); } .box.good { background: var(--good-soft); }
+  .box .big { font-size: 1.6rem; font-weight: 700; }
+  .box.bad .big { color: var(--bad); } .box.good .big { color: var(--good); }
+  .theme-btn { position: fixed; top: 12px; right: 12px; border: 1px solid var(--line); background: var(--surface);
+    color: var(--text); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" type="button">🌓 테마</button>
+<div class="wrap">
+<header>
+  <h1>작업연습1 정리 — exe만 보고 프로그램 다시 만들기</h1>
+  <div class="meta">2026-10-17 · 중학생 눈높이 · 실습 위치 <code>D:\SW\rsa\작업연습1</code></div>
+  <nav><a href="#s1">1. 요약</a><a href="#s2">2. 설명</a><a href="#s3">3. 작업 방법</a><a href="#s4">4. 질문과 답</a></nav>
+</header>
+
+<section id="s1">
+  <h2>1. 한눈에 보는 요약</h2>
+  <div class="table-wrap"><table>
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td>목표</td><td>소스 코드 없이 <b>exe 파일만 보고</b> 똑같이 동작하는 프로그램을 다시 만들기</td></tr>
+    <tr><td>분석 대상</td><td>직접 만든 "성적 계산기" (C# 4.6KB, Go 2.5MB) — 정답과 비교 가능</td></tr>
+    <tr><td>사용 도구</td><td>csc.exe(C# 컴파일러), Go, <b>REA</b>, Ghidra, Python</td></tr>
+    <tr><td>결과</td><td>C# exe 분석 → Python으로 다시 만들기 → <b>315개 시험 모두 일치</b></td></tr>
+    <tr><td>배운 점</td><td>① exe 안에 숫자·글자·명령이 남는다 ② 가설은 시험으로 확인한다 ③ 기계어는 훨씬 어렵다</td></tr>
+  </table></div>
+  <div class="steps">
+    <div class="step"><div class="n">①</div><div class="t">만들기</div><div class="d">소스 → exe</div></div>
+    <div class="step"><div class="n">②</div><div class="t">분석하기</div><div class="d">REA로 속 보기</div></div>
+    <div class="step"><div class="n">③</div><div class="t">추리하기</div><div class="d">규칙 가설</div></div>
+    <div class="step"><div class="n">④</div><div class="t">다시 만들기</div><div class="d">Python 구현</div></div>
+    <div class="step"><div class="n">⑤</div><div class="t">시험하기</div><div class="d">315개 비교 → 틀리면 ③</div></div>
+  </div>
+</section>
+
+<section id="s2">
+  <h2>2. 설명 — 왜 이게 되는가</h2>
+  <h3>2-1. exe 안에 남는 것</h3>
+  <p>컴파일은 "사람 말 → 컴퓨터 말" 번역입니다. 번역해도 <b>내용(규칙)은 남습니다.</b></p>
+  <div class="table-wrap"><table>
+    <tr><th>원본 소스</th><th>C# exe 안</th><th>Go exe 안</th></tr>
+    <tr><td><code>if (s &lt; 40) return "F";</code></td><td>숫자 <code>40</code>, 글자 <code>"F"</code>, 이름 <code>Grade</code></td><td><code>&lt; 0x28</code>, <code>&amp;DAT_1400b2cc8</code></td></tr>
+    <tr><td><code>Average(scores)</code></td><td>이름 <code>Average</code> + 부르는 관계</td><td>이름 사라짐, grade 안에 합쳐짐</td></tr>
+    <tr><td><code>"average={0:F1}"</code></td><td>글자 그대로</td><td>글자 그대로 (주소로 연결)</td></tr>
+  </table></div>
+  <div class="tip"><b>비유:</b> C#은 "요약 노트", Go·C는 "구워진 케이크". 노트는 읽으면 되지만, 케이크는 맛보고 재료를 추측해야 합니다.</div>
+
+  <h3>2-2. 겉으로는 모르는 규칙</h3>
+  <div class="table-wrap"><table>
+    <tr><th>입력</th><th>출력</th><th>겉으로 본 의문</th><th>분석으로 찾은 답</th></tr>
+    <tr><td>99 98 97</td><td><code>A+</code></td><td>"+"는 왜?</td><td>숫자 <b>95</b>, 글자 <b>"+"</b> → 전부 95↑이면 "+"</td></tr>
+    <tr><td>100 100 30</td><td><code>F</code></td><td>평균 76.7인데 왜 F?</td><td>숫자 <b>40</b>, 바로 <b>"F"</b> → 과락</td></tr>
+  </table></div>
+
+  <h3>2-3. 분석만으로는 부족한 것</h3>
+  <div class="score">
+    <div class="box bad"><div class="big">303 / 315</div>1차 시험 — 평균 84.25를 원본은 84.3, Python은 84.2로 표시 (반올림 방식 차이)</div>
+    <div class="box good"><div class="big">315 / 315</div>"5에서 올림"으로 고친 뒤 2차 시험</div>
+  </div>
+  <p>이 차이는 분석 보고서 어디에도 안 나옵니다. <b>시험해야만</b> 찾을 수 있습니다.</p>
+</section>
+
+<section id="s3">
+  <h2>3. 작업 방법 — 단계별 예시</h2>
+  <h3>① 만들기</h3>
+<pre><code>cd D:\SW\rsa\작업연습1
+.\1_원본만들기\build.ps1
+
+average=84.0 grade=B
+average=98.0 grade=A+
+average=76.7 grade=F</code></pre>
+  <h3>② 분석하기 (REA)</h3>
+<pre><code>.\2_분석하기\analyze.ps1
+# 내부에서 실행되는 REA 명령
+rea inspect-managed-artifact GradeCalc.exe --format json   # 이 파일은 무엇인가
+rea inspect-managed-members  GradeCalc.exe --format json   # 함수·숫자·호출 관계</code></pre>
+  <div class="table-wrap"><table>
+    <tr><th>함수</th><th>숫자</th><th>글자</th><th>부르는 함수</th></tr>
+    <tr><td>LetterFor</td><td>90, 80, 70, 60</td><td>A, B, C, D, F</td><td>—</td></tr>
+    <tr><td>Grade</td><td>40, 95</td><td>F, +</td><td>Average, LetterFor, Concat</td></tr>
+  </table></div>
+  <h3>③ 추리하기</h3>
+  <p><code>2_분석하기\분석결과.md</code> 5장 "추리(가설)" 표를 읽고 규칙을 적습니다.</p>
+  <h3>④ 다시 만들기</h3>
+<pre><code># 3_다시만들기\grade_calc.py
+FAIL_LINE = 40       # 분석결과: Grade 함수의 숫자 40
+PERFECT_LINE = 95    # 분석결과: Grade 함수의 숫자 95</code></pre>
+  <h3>⑤ 시험하기</h3>
+<pre><code>python .\3_다시만들기\compare.py
+시험 315개 중 315개 일치, 0개 불일치</code></pre>
+  <h3>(도전) 기계어 버전</h3>
+<pre><code>.\4_도전_네이티브\run.ps1      # 약 1분 (Ghidra)
+# → result\의사코드_grade.c 에서 0x28(40), 0x5f(95)를 찾아보기</code></pre>
+</section>
+
+<section id="s4">
+  <h2>4. 질문과 답</h2>
+  <h3>Q1. REA가 없으면 힘든가요?</h3>
+  <p><b>아니요, 다른 도구로도 됩니다. 다만 REA가 있으면 편하고 AI에게 맡기기 좋습니다.</b></p>
+  <div class="table-wrap"><table>
+    <tr><th>하고 싶은 일</th><th>REA 없이</th><th>REA를 쓰면</th></tr>
+    <tr><td>C# exe 분석</td><td>ILSpy, dnSpy (C# 코드를 바로 보여 줌)</td><td>숫자·글자·호출 관계를 JSON으로 정리</td></tr>
+    <tr><td>기계어 exe 분석</td><td>Ghidra 화면을 직접 조작</td><td>명령 한 줄로 Ghidra를 화면 없이 실행</td></tr>
+    <tr><td>안드로이드 앱</td><td>JADX GUI</td><td>같은 방식의 명령 + JSON</td></tr>
+    <tr><td>AI에게 맡기기</td><td>도구마다 따로 연결</td><td>MCP 하나로 Claude Code가 전부 사용</td></tr>
+  </table></div>
+  <div class="tip">이 연습에서도 exe 속 글자(#US 구역)는 REA가 번호표만 줘서 <b>Python으로 직접 읽어</b> 연결했습니다 (<code>summarize.py</code>의 <code>user_strings</code>).</div>
+  <p><b>REA의 진짜 장점:</b> ① 대상이 달라도 같은 사용법과 JSON 결과 ② 결과마다 파일 지문·도구 버전·한계 기록(근거) ③ AI 연결</p>
+
+  <h3>Q2. REA 코드는 어떻게 활용했나요?</h3>
+  <p><b>REA 소스 코드를 고치지 않고, 완성된 REA 프로그램을 명령어로 불러서 썼습니다.</b></p>
+<pre><code>jins0001/rea (소스, TypeScript 35만 줄)
+      │  같은 코드가 빌드되어 npm에 올라감
+      ▼
+npm install -g rea-agents@6.4.0   ← 노트북에 설치
+      ▼
+우리 스크립트(.ps1) ── rea 명령 ──▶ REA ──▶ JSON 결과
+우리 Python(summarize.py) ◀── JSON 읽기 ──┘
+      ▼
+분석결과.md</code></pre>
+  <div class="table-wrap"><table>
+    <tr><th>REA 명령</th><th>어디서</th><th>꺼내 쓴 칸</th></tr>
+    <tr><td><code>inspect-managed-artifact</code></td><td>2_분석하기</td><td>파일 종류, 지문</td></tr>
+    <tr><td><code>inspect-managed-members</code></td><td>2_분석하기</td><td>signature(입출력), body.anchors(숫자·글자), call_edges(호출)</td></tr>
+    <tr><td><code>inspect-artifact</code></td><td>4_도전</td><td>파일 신분증</td></tr>
+    <tr><td><code>decompile --provider ghidra</code></td><td>4_도전</td><td>normalized_result(의사 코드)</td></tr>
+  </table></div>
+  <div class="tip"><b>비유:</b> REA 소스는 "자동차 설계도", 설치한 REA는 "완성된 자동차". 설계도를 고친 게 아니라 <b>차를 운전</b>했습니다. 저장소 소스와 문서는 명령과 결과 모양을 확인하는 <b>설명서</b>로 읽었습니다.</div>
+</section>
+</div>
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    try { var saved = localStorage.getItem('rea-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('rea-theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

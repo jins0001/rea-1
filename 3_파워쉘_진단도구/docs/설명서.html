@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파워쉘 하드웨어 진단 도구 — 중학생 눈높이 설명서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --accent: #34d399;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 10% 20%, rgba(52, 211, 153, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.12) 0%, transparent 45%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #34d399, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(52, 211, 153, 0.3);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    }
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .sub-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+    pre {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 18px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #34d399;
+      line-height: 1.5;
+      margin: 15px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+    }
+    th { color: var(--accent); background: rgba(52, 211, 153, 0.05); }
+    .step-box {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content h4 { color: #f8fafc; margin-bottom: 4px; }
+    .step-content p { color: var(--text-muted); font-size: 0.95rem; }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">프로젝트 3 • 중학생 눈높이 가이드</span>
+      <h1>파워쉘 하드웨어 정밀 진단 도구</h1>
+      <p class="subtitle">별도 설치 0개! 윈도우 기본 내장 기능으로 SSD, HDD, RAM 분석하고 HTML 리포트 뽑기</p>
+    </header>
+
+    <!-- 1. 원리 -->
+    <div class="card">
+      <h2>💡 1. 원리 — 맥가이버 칼(스위스 아미 나이프)에 빗대어 보는 파워쉘</h2>
+      <p>
+        파워쉘(PowerShell)은 윈도우를 설치하면 처음부터 들어 있는 <strong>만능 도구함</strong>입니다.  
+        파이썬이나 다른 프로그램을 새로 깔 수 없는 컴퓨터(학교 컴퓨터, 친구 컴퓨터)에서도 클릭 한 번으로 똑같이 작동합니다.
+      </p>
+      <div class="sub-card">
+        <h3>🧰 왜 순수 파워쉘인가요?</h3>
+        <p>
+          윈도우 커널(운영체제의 심장부)과 직통으로 연결되어 있어서 <strong>가장 가볍고, 가장 빠르고, 가장 정확</strong>합니다.  
+          컴퓨터가 켜진 상태라면 아무런 준비 없이 즉시 하드웨어 건강 상태를 뽑아낼 수 있습니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. 작동 원리 -->
+    <div class="card">
+      <h2>⚙️ 2. 작동 원리 — 파워쉘의 마법 주문 3가지</h2>
+      <pre>
+# 1. 꽂혀 있는 디스크가 SSD인지 HDD인지 물어보기
+Get-PhysicalDisk
+
+# 2. 메인보드 램 슬롯에 몇 GB짜리 메모리가 꽂혀 있는지 물어보기
+Get-CimInstance Win32_PhysicalMemory
+
+# 3. 윈도우가 실제 사용 중인 메모리 용량 물어보기
+Get-CimInstance Win32_OperatingSystem</pre>
+      <p>이 마법 주문 세 줄이면 윈도우가 알아서 메인보드 칩셋과 SSD 컨트롤러에게 무전기를 쳐서 결과를 받아옵니다.</p>
+    </div>
+
+    <!-- 3. 구성 -->
+    <div class="card">
+      <h2>📁 3. 구성 — 어떤 파일들로 이루어져 있나요?</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>파일명</th>
+            <th>역할</th>
+            <th>설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>run.bat</strong></td>
+            <td>원클릭 실행기</td>
+            <td>더블 클릭만 하면 검은 터미널에서 진단하고 브라우저 보고서까지 열어줍니다.</td>
+          </tr>
+          <tr>
+            <td><strong>Analyze-Hardware.ps1</strong></td>
+            <td>파워쉘 진단 스크립트</td>
+            <td>SSD, HDD, RAM을 진단하고 HTML 보고서를 파일로 만드는 메인 코드입니다.</td>
+          </tr>
+          <tr>
+            <td><strong>Hardware_Diagnostic_Report.html</strong></td>
+            <td>완성된 진단 보고서</td>
+            <td>진단이 끝나면 자동으로 만들어지는 단독 실행 웹 리포트입니다.</td>
+          </tr>
+          <tr>
+            <td><strong>docs/README.md</strong></td>
+            <td>마크다운 설명서</td>
+            <td>프로젝트의 배경과 상세 해설을 담은 문서입니다.</td>
+          </tr>
+          <tr>
+            <td><strong>docs/설명서.html</strong></td>
+            <td>웹 설명서</td>
+            <td>지금 보고 있는 바로 이 안내 문서입니다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. 프로세스 -->
+    <div class="card">
+      <h2>🔄 4. 프로세스 — 4단계 진단 흐름</h2>
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>시스템 센서 및 하드웨어 조회</h4>
+          <p>Get-PhysicalDisk와 Win32_PhysicalMemory를 실행하여 장착된 하드웨어 목록을 가져옵니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>터미널 즉시 컬러 출력</h4>
+          <p>화면에 녹색 Healthy 배지와 사용률 막대그래프를 즉시 출력하여 상태를 보여줍니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>HTML 보고서 파일 자동 생성</h4>
+          <p>표와 통계 카드가 담긴 <code>Hardware_Diagnostic_Report.html</code> 파일을 현재 폴더에 저장합니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>브라우저 자동 팝업</h4>
+          <p>Start-Process를 통해 브라우저가 자동으로 뜨며 멋진 최종 진단서를 확인할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 PC 하드웨어 분석기 프로젝트 • 교육용 실습 자료</p>
+    </footer>
+  </div>
+</body>
+</html>

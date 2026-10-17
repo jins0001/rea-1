@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실시간 웹 대시보드 — 중학생 눈높이 설명서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(20, 27, 45, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;
+      --accent: #c084fc;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 80% 20%, rgba(192, 132, 252, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.12) 0%, transparent 45%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(192, 132, 252, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(192, 132, 252, 0.3);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    }
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 15px;
+    }
+    .sub-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .sub-card h3 { font-size: 1.15rem; margin-bottom: 8px; color: #fff; }
+    .icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+    pre {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 18px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #c084fc;
+      line-height: 1.5;
+      margin: 15px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+    }
+    th { color: var(--accent); background: rgba(192, 132, 252, 0.05); }
+    .step-box {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content h4 { color: #f8fafc; margin-bottom: 4px; }
+    .step-content p { color: var(--text-muted); font-size: 0.95rem; }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">프로젝트 2 • 중학생 눈높이 가이드</span>
+      <h1>PC 하드웨어 실시간 웹 대시보드</h1>
+      <p class="subtitle">크롬·엣지 브라우저에서 화려한 게이지와 애니메이션으로 내 PC 실시간 관찰하기</p>
+    </header>
+
+    <!-- 1. 원리 -->
+    <div class="card">
+      <h2>💡 1. 원리 — 식당의 손님과 요리사에 빗대어 보는 웹 구조</h2>
+      <p>웹 브라우저와 파이썬 서버가 일하는 방식은 <strong>맛있는 레스토랑</strong>과 완벽히 똑같습니다!</p>
+      
+      <div class="grid-2">
+        <div class="sub-card">
+          <span class="icon">🍽️</span>
+          <h3>손님 = 웹 브라우저 (Chrome, Edge)</h3>
+          <p>식탁에 앉아서 2초마다 <em>"지금 메모리랑 SSD 상황 어때요?"</em> 하고 벨을 누릅니다. 주방에서 보낸 데이터를 예쁜 원형 차트와 네온 빛으로 화려하게 차려냅니다.</p>
+        </div>
+        <div class="sub-card">
+          <span class="icon">👨‍🍳</span>
+          <h3>요리사 = 파이썬 서버 (`server.py`)</h3>
+          <p>주방에서 윈도우(WMI) 창고로 달려가 SSD 수명, 램 사용량을 확인한 다음, 먹기 좋은 형태(JSON 데이터)로 요리하여 손님에게 배달합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 작동 원리 -->
+    <div class="card">
+      <h2>⚙️ 2. 작동 원리 — 왜 브라우저에 바로 안 나오고 서버를 거칠까?</h2>
+      <p>
+        웹 브라우저는 인터넷 서핑 중에 해킹을 당하지 않도록 <strong>컴퓨터 하드웨어 깊숙한 곳을 직접 만질 수 없게</strong> 안전장치(샌드박스)가 걸려 있습니다.  
+        그래서 내 컴퓨터 안에 <strong>믿을 수 있는 전용 중계 서버(파이썬)</strong>를 만들어 브라우저와 시스템 사이를 연결해 주는 것입니다.
+      </p>
+      <pre>
+[ 1. 브라우저 ] ──(2초마다 GET /api/hardware 요청)──▶ [ 2. 파이썬 server.py ]
+       │                                                         │
+[ 4. 원형 게이지 회전 및 수치 갱신 ] ◀──(JSON 수치 배달)── [ 3. 윈도우 WMI 센서 읽기 ]</pre>
+    </div>
+
+    <!-- 3. 구성 -->
+    <div class="card">
+      <h2>📁 3. 구성 — 어떤 파일들로 이루어져 있나요?</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>파일명</th>
+            <th>역할</th>
+            <th>설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>run.bat</strong></td>
+            <td>원클릭 시동기</td>
+            <td>더블 클릭하면 파이썬 서버를 켜고, 크롬/엣지 브라우저 창을 자동으로 열어줍니다.</td>
+          </tr>
+          <tr>
+            <td><strong>server.py</strong></td>
+            <td>백엔드 웹서버</td>
+            <td>포트 8080을 열어 웹 파일들을 서빙하고 <code>/api/hardware</code> 통신 창구를 담당합니다.</td>
+          </tr>
+          <tr>
+            <td><strong>public/index.html</strong></td>
+            <td>대시보드 뼈대</td>
+            <td>원형 게이지, 볼륨 바, 메모리 슬롯 카드의 구조를 잡는 HTML 문서입니다.</td>
+          </tr>
+          <tr>
+            <td><strong>public/style.css</strong></td>
+            <td>비주얼 스타일</td>
+            <td>반투명 글래스모피즘, 네온 컬러, 원형 게이지 회전 효과를 담당합니다.</td>
+          </tr>
+          <tr>
+            <td><strong>public/app.js</strong></td>
+            <td>프론트엔드 두뇌</td>
+            <td>2초마다 서버에서 데이터를 받아와 게이지 둘레를 계산하고 화면에 숫자를 채워 넣습니다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. 프로세스 -->
+    <div class="card">
+      <h2>🔄 4. 프로세스 — 4단계 데이터 흐름</h2>
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>서버 시작 및 브라우저 열기</h4>
+          <p>파이썬이 8080 포트로 대기하고, 웹 브라우저가 <code>http://localhost:8080</code>에 자동으로 접속합니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>사이버 글래스 UI 렌더링</h4>
+          <p>어두운 밤하늘에 별빛 같은 네온 다크 테마와 부드러운 카드 레이아웃이 화면에 깔끔하게 나타납니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>비동기 통신 (Fetch)</h4>
+          <p>화면 깜빡임 없이 조용히 2초마다 윈도우 시스템의 최신 RAM 사용량과 SSD 읽기/쓰기 속도를 긁어옵니다.</p>
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>실시간 게이지 애니메이션</h4>
+          <p>원형 SVG 바가 68% 지점까지 부드럽게 채워지고, 초록색 정상 신호등(Healthy)이 반짝입니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 실제 예시 -->
+    <div class="card">
+      <h2>🔬 5. 실제 내 PC 화면에 표시되는 데이터 예시</h2>
+      <p>실제 내 컴퓨터에서 웹 대시보드를 띄웠을 때 브라우저에 나타나는 지표입니다:</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>영역</th>
+            <th>지표 내용</th>
+            <th>실측 수치</th>
+            <th>해석</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RAM 원형 게이지</strong></td>
+            <td>사용률 및 잔여 공간</td>
+            <td><strong>68.1%</strong> (27.86 GB 중 18.97 GB 사용)</td>
+            <td>8.89 GB 여유로 다중 작업에 충분함</td>
+          </tr>
+          <tr>
+            <td><strong>물리 저장소</strong></td>
+            <td>NVMe SSD 2장 구성</td>
+            <td>WDC 256GB + Samsung 500GB</td>
+            <td>고장 없는 Healthy (정상) 상태</td>
+          </tr>
+          <tr>
+            <td><strong>RAM 슬롯</strong></td>
+            <td>듀얼 채널 슬롯 구성</td>
+            <td>16GB (2667MHz) + 16GB (3200MHz)</td>
+            <td>총 32GB 물리 장착 완료</td>
+          </tr>
+          <tr>
+            <td><strong>볼륨 파티션</strong></td>
+            <td>C:, D:, E: 드라이브</td>
+            <td>C(109GB 여유), E(80GB 여유)</td>
+            <td>파란색 프로그레스 바로 쾌적함 표시</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      <p>© 2026 PC 하드웨어 분석기 프로젝트 • 교육용 실습 자료</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+﻿type,value,note
+sha256,0d2e4528b1b151bc45b8fa6e2b35ddc09f3a46d8dbcd47dcb189502025802601,TrainingSample.exe
+md5,0768b003e7b027135d49507f225f6390,TrainingSample.exe
+url,http://update-check.training.invalid/beacon.php,
+ipv4,203.0.113.45,
+ipv4,198.51.100.7:8443,
+registry,Software\Microsoft\Windows\CurrentVersion\Run,
+file_path,%APPDATA%\SysUpdate\svchost_update.exe,
+mutex,Global\TRAINING_SAMPLE_MUTEX_7F3A,
+user_agent,Mozilla/5.0 (TrainingBot/1.0),
+base64,VFJBSU5JTkcgU0FNUExFIC0gTk9UIE1BTFdBUkU=,TRAINING SAMPLE - NOT MALWARE
